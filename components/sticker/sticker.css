@@ -1,0 +1,30 @@
+.sticker {
+    position: relative;
+    z-index: 1;
+    width: 150px;
+    min-height: 150px;
+    margin: 0 auto;
+    color: #BDBDBD;
+    text-align: center;
+    }
+
+    .sticker__delete {
+        display: none;
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        right: 0;
+        padding: 0;
+        width: 30px;
+        min-width: 30px;
+        height: 30px;
+        min-height: 30px;
+        line-height: 30px;
+        margin: 0;
+        color: #F44336;
+        font-size: 30px;
+    }
+
+    .sticker:hover .sticker__delete {
+        display: block;
+    }

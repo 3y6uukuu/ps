@@ -1,0 +1,11 @@
+<md-input-container>
+    <md-button type="button" class="md-primary md-raised library__upload-new-sticker-button" ng-click="libraryCtrl.uploadNewSticker()">Upload new sticker</md-button>
+</md-input-container>
+
+<div class="library">
+    <div ng-repeat="sticker in libraryCtrl.stickers track by $index">
+        <div ng-drag="true" ng-drag-data="sticker">
+            <sticker data="sticker" on-delete="libraryCtrl.onStickerDelete(data)"></sticker>
+        </div>
+    </div>
+</div>

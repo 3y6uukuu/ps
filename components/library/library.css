@@ -1,0 +1,9 @@
+.library {
+    width: 150px;
+    padding-bottom: 6px;
+    }
+    .library__upload-new-sticker-button {
+        width: 130px;
+        white-space: normal;
+        line-height: 1;
+    }

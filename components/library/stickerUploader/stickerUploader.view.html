@@ -1,0 +1,27 @@
+<form name="stickerUploaderForm">
+    <md-input-container>
+        <md-button type="file"
+                   ng-model="stickerUploaderCtrl.file"
+                   ngf-select="stickerUploaderCtrl.onSelectFile($files)"
+                   ngf-resize="{{::stickerUploaderCtrl.resize}}"
+                   ngf-pattern="'image/*'"
+                   accept="image/*"
+                   class="md-primary md-raised"
+                   required>Choose file</md-button>
+    </md-input-container>
+
+    <div layout="row" layout-align="center center">
+        <img ngf-thumbnail="stickerUploaderCtrl.file" src="" width="150" height="150">
+    </div>
+
+    <md-input-container>
+        <label for="title">Title</label>
+        <input id="title" type="text" ng-model="stickerUploaderCtrl.title" required>
+    </md-input-container>
+
+    <div layout="row" layout-align="center start">
+        <md-button ng-disabled="stickerUploaderForm.$invalid" ng-click="stickerUploaderCtrl.uploadNewSticker()" class="md-primary md-raised">Upload new sticker</md-button>
+        <md-button ng-click="stickerUploaderCtrl.cancel()" class="md-primary">Cancel</md-button>
+    </div>
+</form>
+

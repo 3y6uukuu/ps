@@ -1,0 +1,27 @@
+{
+  "name": "ps",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Denis Zubitskyi <Denis_Zubitskyi@epam.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.4.7",
+    "angular-animate": "1.4.7",
+    "angular-aria": "1.4.7",
+    "angular-material": "0.11.4",
+    "angular-route": "1.4.7",
+    "ng-file-upload": "^10.0.2",
+    "ngDraggable": "~0.1.8"
+  }
+}

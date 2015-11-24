@@ -1,0 +1,25 @@
+<form name="photoAreaForm" class="photo-area">
+    <md-input-container layout="row" layout-align="center center">
+        <md-button
+            type="file"
+            ng-model="photoAreaCtrl.file"
+            ngf-select="photoAreaCtrl.onSelectFile($files)"
+            ngf-pattern="'image/*'"
+            accept="image/*"
+            class="md-primary md-raised"
+            required>Choose file</md-button>
+
+        <md-button type="button" class="md-primary" ng-disabled="photoAreaForm.$invalid" ng-click="photoAreaCtrl.startOver()">Start over</md-button>
+    </md-input-container>
+
+    <div ng-drop="true" ng-drop-success="photoAreaCtrl.dropSuccess($data, $event)">
+        <img ngf-thumbnail="photoAreaCtrl.file">
+        <img ng-src="{{photoAreaCtrl.src}}">
+
+        <div ng-repeat="sticker in photoAreaCtrl.stickers track by $index">
+            <div ng-drag="true" ng-drag-data="sticker.data">
+                <sticker data="sticker.data" position="sticker.position" on-delete="photoAreaCtrl.onStickerDelete(data)"></sticker>
+            </div>
+        </div>
+    </div>
+</form>
