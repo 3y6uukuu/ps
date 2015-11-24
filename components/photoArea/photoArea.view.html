@@ -14,12 +14,10 @@
 
     <div ng-drop="true" ng-drop-success="photoAreaCtrl.dropSuccess($data, $event)">
         <img ngf-thumbnail="photoAreaCtrl.file">
-        <img ng-src="{{photoAreaCtrl.src}}">
+        <img ng-src="{{photoAreaCtrl.photo[0]}}">
 
         <div ng-repeat="sticker in photoAreaCtrl.stickers track by $index">
-            <div ng-drag="true" ng-drag-data="sticker.data">
-                <sticker data="sticker.data" position="sticker.position" on-delete="photoAreaCtrl.onStickerDelete(data)"></sticker>
-            </div>
+            <sticker data="sticker.data" position="sticker.position" on-delete="photoAreaCtrl.onStickerDelete(data)" class="sticker__wrapper"></sticker>
         </div>
     </div>
 </form>

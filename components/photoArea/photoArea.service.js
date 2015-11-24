@@ -24,6 +24,19 @@
             this.resource.createNewSticker(data);
         };
 
+        this.restorePhoto = function(photo) {
+            var savedPhoto = this.resource.restorePhoto();
+
+            if (savedPhoto) {
+                photo.push(savedPhoto);
+            }
+        };
+
+        this.restorePhotoArea = function(photo, stickers) {
+            this.restorePhoto(photo);
+            this.restoreStickers(stickers);
+        };
+
         this.restoreStickers = function(stickers) {
             var savedStickers = this.resource.getSavedStickers();
 
@@ -44,6 +57,22 @@
                     break;
                 }
             }
+        };
+
+        this.deletePhoto = function(photo) {
+            this.resource.deletePhoto();
+            photo.length = 0;
+        };
+
+        this.deleteStickers = function(stickers) {
+            stickers.length = 0;
+
+            this.resource.deleteStickers(this.stickers);
+        };
+
+        this.deletePhotoArea = function(photo, stickers) {
+            this.deletePhoto(photo);
+            this.deleteStickers(stickers);
         };
     }
 

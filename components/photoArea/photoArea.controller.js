@@ -4,22 +4,15 @@
         this.service = PhotoAreaService;
         this.resource = PhotoAreaResource;
         this.stickers = [];
+        this.photo = [];
 
         this.restoreData = function() {
-            var savedData = this.resource.restoreData();
-
-            if (savedData) {
-                this.file = null;
-                this.src = savedData;
-            }
-
-            this.service.restoreStickers(this.stickers);
+            this.service.restorePhotoArea(this.photo, this.stickers);
         };
 
         this.startOver = function() {
+            this.service.deletePhotoArea(this.photo, this.stickers);
             this.file = null;
-
-            this.resource.startOver();
         };
 
         this.dropSuccess = function(data, event) {
@@ -31,8 +24,8 @@
         };
 
         this.onSelectFile = function(file) {
-            this.resource.onSelectFile(file);
-            //this.src = null;
+            this.service.deletePhotoArea(this.photo, this.stickers);
+            this.resource.savePhoto(this.photo, file);
         };
 
         this.restoreData();

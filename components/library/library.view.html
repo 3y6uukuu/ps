@@ -3,7 +3,7 @@
 </md-input-container>
 
 <div class="library">
-    <div ng-repeat="sticker in libraryCtrl.stickers track by $index">
+    <div ng-repeat="sticker in libraryCtrl.stickers track by $index" class="sticker__wrapper">
         <div ng-drag="true" ng-drag-data="sticker">
             <sticker data="sticker" on-delete="libraryCtrl.onStickerDelete(data)"></sticker>
         </div>

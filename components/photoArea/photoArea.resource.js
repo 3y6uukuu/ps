@@ -1,22 +1,18 @@
 ;(function() {
 
     function PhotoAreaResource(Upload) {
-        this.restoreData = function() {
+        this.restorePhoto = function() {
             return localStorage.getItem('photoArea');
         };
 
-        this.startOver = function() {
+        this.deletePhoto = function() {
             localStorage.removeItem('photoArea');
         };
 
-        this.onSelectFile = function(file) {
+        this.savePhoto = function(photo, file) {
             Upload.base64DataUrl(file).then(function(urls) {
                 localStorage.setItem('photoArea', urls[0]);
             });
-        };
-
-        this.savePhoto = function(base64DataUrl) {
-            localStorage.setItem('photoArea', base64DataUrl);
         };
 
         this.createNewSticker = function(sticker) {
@@ -66,6 +62,10 @@
             localStorage.setItem('photoAreaStickers', JSON.stringify(data));
 
             return sticker;
+        };
+
+        this.deleteStickers = function() {
+            localStorage.removeItem('photoAreaStickers');
         };
     }
 
