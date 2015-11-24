@@ -6,15 +6,20 @@
         this.stickers = [];
 
         this.restoreData = function() {
-            //this.file =
-            this.src = this.resource.restoreData();
+            var savedData = this.resource.restoreData();
+
+            if (savedData) {
+                this.file = null;
+                this.src = savedData;
+            }
+
+            this.service.restoreStickers(this.stickers);
         };
 
         this.startOver = function() {
-            this.src = null;
-            //this.file = null;
+            this.file = null;
 
-            this.resource.localStorage.startOver();
+            this.resource.startOver();
         };
 
         this.dropSuccess = function(data, event) {
@@ -27,6 +32,7 @@
 
         this.onSelectFile = function(file) {
             this.resource.onSelectFile(file);
+            //this.src = null;
         };
 
         this.restoreData();

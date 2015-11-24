@@ -3,16 +3,6 @@
     function PhotoAreaService(PhotoAreaResource) {
         this.resource = PhotoAreaResource;
 
-        this.onStickerDelete = function(stickers, sticker) {
-            for (var i = 0; i < stickers.length; i++) {
-                if (sticker.id === stickers[i].data.id) {
-                    stickers.splice(i, 1);
-
-                    break;
-                }
-            }
-        };
-
         this.createNewSticker = function(stickers, sticker, event) {
             // Handle delete button click
             if (!sticker) {
@@ -21,13 +11,39 @@
 
             sticker.id = (new Date()).getTime();
 
-            stickers.push({
+            var data = {
                 data: sticker,
                 position: {
                     x: event.x,
                     y: event.y
                 }
-            });
+            };
+
+            stickers.push(data);
+
+            this.resource.createNewSticker(data);
+        };
+
+        this.restoreStickers = function(stickers) {
+            var savedStickers = this.resource.getSavedStickers();
+
+            if (savedStickers) {
+                for (var i = 0; i < savedStickers.length; i++) {
+                    stickers.push(savedStickers[i]);
+                }
+            }
+        };
+
+        this.deleteSticker = function(stickers, sticker) {
+            var deletedSticker = this.resource.deleteSticker(sticker);
+
+            for (var i = 0; i < stickers.length; i++) {
+                if (deletedSticker.id === stickers[i].data.id) {
+                    stickers.splice(i, 1);
+
+                    break;
+                }
+            }
         };
     }
 

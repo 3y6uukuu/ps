@@ -1,6 +1,19 @@
 ;(function() {
 
     function LibraryResource() {
+        this.createNewSticker = function(sticker) {
+            var savedStickers = this.getSavedStickers();
+            var data = {};
+
+            savedStickers.push(sticker);
+
+            data.stickers = savedStickers;
+
+            localStorage.setItem('library', JSON.stringify(data));
+
+            return sticker;
+        };
+
         this.getSavedLibrary = function() {
             var savedLibrary = localStorage.getItem('library');
 
@@ -16,19 +29,6 @@
             }
 
             return savedStickers;
-        };
-
-        this.createNewSticker = function(sticker) {
-            var savedStickers = this.getSavedStickers();
-            var data = {};
-
-            savedStickers.push(sticker);
-
-            data.stickers = savedStickers;
-
-            localStorage.setItem('library', JSON.stringify(data));
-
-            return sticker;
         };
 
         this.deleteSticker = function(sticker) {

@@ -22,8 +22,6 @@
 
         this.onStickerDelete = function(sticker) {
             this.service.deleteSticker(this.stickers, sticker);
-
-            this.restoreData();
         };
 
         this.restoreData();

@@ -4,8 +4,8 @@
     width: 150px;
     min-height: 150px;
     margin: 0 auto;
-    color: #BDBDBD;
     text-align: center;
+    overflow: hidden;
     }
 
     .sticker__delete {
@@ -25,6 +25,18 @@
         font-size: 30px;
     }
 
-    .sticker:hover .sticker__delete {
+    .sticker__title {
+        display: none;
+        width: 100%;
+        position: absolute;
+        z-index: 2;
+        bottom: 2px;
+        left: 0;
+        background: rgba(0,0,0,0.65);
+        color: white;
+    }
+
+    .sticker:hover .sticker__delete,
+    .sticker:hover .sticker__title {
         display: block;
     }
