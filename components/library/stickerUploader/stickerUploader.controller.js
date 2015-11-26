@@ -6,24 +6,30 @@
         this.locals = locals;
         this.title = null;
 
-        var src = '';
+        var urlSrcPromise = null;
 
-        this.onSelectFile = function(files) {
-            Upload.base64DataUrl(files).then(function(urls){
-                src = urls[0];
-            });
+        this.onSelectFile = function(file) {
+            urlSrcPromise = Upload.base64DataUrl(file);
         };
 
         this.uploadNewSticker = function() {
-            var sticker = {
-                src: src,
-                title: this.title,
-                id: (new Date()).getTime()
-            };
+            if (!urlSrcPromise) {
+                return;
+            }
 
-            this.locals.apply(sticker);
+            urlSrcPromise.then(function(urls) {
+                var src = urls[0];
 
-            this.$mdDialog.cancel();
+                var sticker = {
+                    src: src,
+                    title: this.title,
+                    id: (new Date()).getTime()
+                };
+
+                this.locals.apply(sticker);
+
+                this.$mdDialog.cancel();
+            }.bind(this));
         };
 
         this.cancel = function() {

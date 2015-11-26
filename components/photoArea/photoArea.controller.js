@@ -3,29 +3,31 @@
     function PhotoAreaController(PhotoAreaService, PhotoAreaResource) {
         this.service = PhotoAreaService;
         this.resource = PhotoAreaResource;
-        this.stickers = [];
-        this.photo = [];
 
-        this.restoreData = function() {
-            this.service.restorePhotoArea(this.photo, this.stickers);
-        };
-
-        this.startOver = function() {
-            this.service.deletePhotoArea(this.photo, this.stickers);
-            this.file = null;
-        };
-
-        this.dropSuccess = function(data, event) {
-            this.service.createNewSticker(this.stickers, data, event);
-        };
-
-        this.onStickerDelete = function(sticker) {
-            this.service.deleteSticker(this.stickers, sticker);
+        this.data = {
+            file: this.file,
+            photo: this.photo,
+            stickers: []
         };
 
         this.onSelectFile = function(file) {
-            this.service.deletePhotoArea(this.photo, this.stickers);
-            this.resource.savePhoto(this.photo, file);
+            this.service.savePhoto(this.data, file);
+        };
+
+        this.restoreData = function() {
+            this.service.restorePhotoArea(this.data);
+        };
+
+        this.startOver = function() {
+            this.service.deletePhotoArea(this.data);
+        };
+
+        this.dropSuccess = function(droppedStickerData, droppedEvent) {
+            this.service.createNewSticker(this.data, droppedStickerData, droppedEvent);
+        };
+
+        this.onStickerDelete = function(sticker) {
+            this.service.deleteSticker(this.data, sticker);
         };
 
         this.restoreData();

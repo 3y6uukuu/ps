@@ -9,14 +9,17 @@
             class="md-primary md-raised"
             required>Choose file</md-button>
 
-        <md-button type="button" class="md-primary" ng-disabled="photoAreaForm.$invalid" ng-click="photoAreaCtrl.startOver()">Start over</md-button>
+        <md-button type="button" class="md-primary" ng-disabled="!photoAreaCtrl.data.photo" ng-click="photoAreaCtrl.startOver()">Start over</md-button>
     </md-input-container>
 
     <div ng-drop="true" ng-drop-success="photoAreaCtrl.dropSuccess($data, $event)">
-        <img ngf-thumbnail="photoAreaCtrl.file">
-        <img ng-src="{{photoAreaCtrl.photo[0]}}">
+        <!--
+            NOTE: ng-show="photoAreaCtrl.data.photo" here because, even after: photo = undefined; image still displayed
+            look @ PhotoAreaService.deletePhoto method
+        -->
+        <img ng-show="photoAreaCtrl.data.photo" ng-src="{{photoAreaCtrl.data.photo}}">
 
-        <div ng-repeat="sticker in photoAreaCtrl.stickers track by $index">
+        <div ng-repeat="sticker in photoAreaCtrl.data.stickers">
             <sticker data="sticker.data" position="sticker.position" on-delete="photoAreaCtrl.onStickerDelete(data)" class="sticker__wrapper"></sticker>
         </div>
     </div>

@@ -14,10 +14,8 @@
 
         this.uploadNewSticker = function() {
             this.service.showUploadNewStickerDialog({
-                apply: this.createNewSticker.bind(this),
-                sticker: event
+                apply: this.createNewSticker.bind(this)
             });
-
         };
 
         this.onStickerDelete = function(sticker) {

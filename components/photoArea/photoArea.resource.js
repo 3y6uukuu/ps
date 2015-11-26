@@ -1,6 +1,8 @@
 ;(function() {
 
     function PhotoAreaResource(Upload) {
+        this.urlSrcPromise = null;
+
         this.restorePhoto = function() {
             return localStorage.getItem('photoArea');
         };
@@ -9,9 +11,13 @@
             localStorage.removeItem('photoArea');
         };
 
-        this.savePhoto = function(photo, file) {
-            Upload.base64DataUrl(file).then(function(urls) {
-                localStorage.setItem('photoArea', urls[0]);
+        this.savePhoto = function(file) {
+            this.urlSrcPromise = Upload.base64DataUrl(file);
+
+            this.urlSrcPromise.then(function(urls) {
+                if (urls && urls.length) {
+                    localStorage.setItem('photoArea', urls[0]);
+                }
             });
         };
 

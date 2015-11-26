@@ -3,76 +3,96 @@
     function PhotoAreaService(PhotoAreaResource) {
         this.resource = PhotoAreaResource;
 
-        this.createNewSticker = function(stickers, sticker, event) {
+        this.createNewSticker = function(data, droppedStickerData, droppedEvent) {
             // Handle delete button click
-            if (!sticker) {
+            if (!droppedStickerData) {
                 return;
             }
 
-            sticker.id = (new Date()).getTime();
+            droppedStickerData.id = (new Date()).getTime();
 
-            var data = {
-                data: sticker,
+            var extendedStickerData = {
+                data: droppedStickerData,
                 position: {
-                    x: event.x,
-                    y: event.y
+                    x: droppedEvent.x,
+                    y: droppedEvent.y
                 }
             };
 
-            stickers.push(data);
+            data.stickers.push(extendedStickerData);
 
-            this.resource.createNewSticker(data);
+            this.resource.createNewSticker(extendedStickerData);
         };
 
-        this.restorePhoto = function(photo) {
+        this.savePhoto = function(data, file) {
+            this.deletePhotoArea(data);
+
+            this.resource.savePhoto(file);
+
+            this.resource.urlSrcPromise.then(function(urls) {
+                if (urls && urls.length) {
+                    data.photo = urls[0];
+                }
+            });
+        };
+
+        this.restorePhoto = function(data) {
             var savedPhoto = this.resource.restorePhoto();
 
             if (savedPhoto) {
-                photo.push(savedPhoto);
+                data.photo = savedPhoto;
             }
         };
 
-        this.restorePhotoArea = function(photo, stickers) {
-            this.restorePhoto(photo);
-            this.restoreStickers(stickers);
+        this.restorePhotoArea = function(data) {
+            this.restorePhoto(data);
+            this.restoreStickers(data);
         };
 
-        this.restoreStickers = function(stickers) {
+        this.restoreStickers = function(data) {
             var savedStickers = this.resource.getSavedStickers();
 
             if (savedStickers) {
                 for (var i = 0; i < savedStickers.length; i++) {
-                    stickers.push(savedStickers[i]);
+                    data.stickers.push(savedStickers[i]);
                 }
             }
         };
 
-        this.deleteSticker = function(stickers, sticker) {
+        this.deleteSticker = function(data, sticker) {
+
             var deletedSticker = this.resource.deleteSticker(sticker);
 
-            for (var i = 0; i < stickers.length; i++) {
-                if (deletedSticker.id === stickers[i].data.id) {
-                    stickers.splice(i, 1);
+            for (var i = 0; i < data.stickers.length; i++) {
+                if (deletedSticker.id === data.stickers[i].data.id) {
+                    data.stickers.splice(i, 1);
 
                     break;
                 }
             }
         };
 
-        this.deletePhoto = function(photo) {
+        this.deletePhoto = function(data) {
             this.resource.deletePhoto();
-            photo.length = 0;
+
+            /**
+             * It's really strange for me, but even after that ng-src="{{photoAreaCtrl.data.photo}}" in view, still displayed previous picture
+             * So, I've added ng-show="photoAreaCtrl.data.photo"
+             */
+            data.photo = undefined;
         };
 
-        this.deleteStickers = function(stickers) {
-            stickers.length = 0;
-
+        this.deleteStickers = function(data) {
             this.resource.deleteStickers(this.stickers);
+
+            data.stickers.length = 0;
         };
 
-        this.deletePhotoArea = function(photo, stickers) {
-            this.deletePhoto(photo);
-            this.deleteStickers(stickers);
+        this.deletePhotoArea = function(data) {
+            data.file = null;
+
+            this.deletePhoto(data);
+            this.deleteStickers(data);
         };
     }
 
