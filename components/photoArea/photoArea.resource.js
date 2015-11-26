@@ -56,7 +56,7 @@
             var data = {};
 
             for (var i = 0; i < savedStickers.length; i++) {
-                if (sticker.id === savedStickers[i].data.id) {
+                if (sticker.id === savedStickers[i].id) {
                     savedStickers.splice(i, 1);
 
                     break;
@@ -66,6 +66,8 @@
             data.stickers = savedStickers;
 
             localStorage.setItem('photoAreaStickers', JSON.stringify(data));
+
+            //$rootScope.$emit('localstorageAction', 'Some data');
 
             return sticker;
         };

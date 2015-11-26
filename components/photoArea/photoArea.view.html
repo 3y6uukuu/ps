@@ -20,7 +20,7 @@
         <img ng-show="photoAreaCtrl.data.photo" ng-src="{{photoAreaCtrl.data.photo}}">
 
         <div ng-repeat="sticker in photoAreaCtrl.data.stickers">
-            <sticker data="sticker.data" position="sticker.position" on-delete="photoAreaCtrl.onStickerDelete(data)" class="sticker__wrapper"></sticker>
+            <sticker data="sticker" position="sticker.position" on-delete="photoAreaCtrl.onStickerDelete(data)" class="sticker__wrapper"></sticker>
         </div>
     </div>
 </form>

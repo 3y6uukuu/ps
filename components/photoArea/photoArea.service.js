@@ -9,15 +9,15 @@
                 return;
             }
 
-            droppedStickerData.id = (new Date()).getTime();
-
             var extendedStickerData = {
-                data: droppedStickerData,
+                id: (new Date()).getTime(),
                 position: {
                     x: droppedEvent.x,
                     y: droppedEvent.y
                 }
             };
+
+            angular.extend(extendedStickerData, droppedStickerData);
 
             data.stickers.push(extendedStickerData);
 
@@ -64,7 +64,7 @@
             var deletedSticker = this.resource.deleteSticker(sticker);
 
             for (var i = 0; i < data.stickers.length; i++) {
-                if (deletedSticker.id === data.stickers[i].data.id) {
+                if (deletedSticker.id === data.stickers[i].id) {
                     data.stickers.splice(i, 1);
 
                     break;
