@@ -1,24 +1,17 @@
 ;(function() {
 
-    function PhotoAreaResource(Upload) {
+    function PhotoAreaResource(LocalStorageService, Upload) {
+        this.localStorageService = LocalStorageService;
         this.urlSrcPromise = null;
-
-        this.restorePhoto = function() {
-            return localStorage.getItem('photoArea');
-        };
-
-        this.deletePhoto = function() {
-            localStorage.removeItem('photoArea');
-        };
 
         this.savePhoto = function(file) {
             this.urlSrcPromise = Upload.base64DataUrl(file);
 
             this.urlSrcPromise.then(function(urls) {
                 if (urls && urls.length) {
-                    localStorage.setItem('photoArea', urls[0]);
+                    this.localStorageService.set('photoArea', urls[0]);
                 }
-            });
+            }.bind(this));
         };
 
         this.createNewSticker = function(sticker) {
@@ -29,26 +22,29 @@
 
             data.stickers = savedStickers;
 
-            localStorage.setItem('photoAreaStickers', JSON.stringify(data));
+            this.localStorageService.set('photoAreaStickers', data);
 
             return sticker;
         };
 
-        this.getSavedLibrary = function() {
-            var savedLibrary = localStorage.getItem('photoAreaStickers');
-
-            return JSON.parse(savedLibrary);
-        };
-
+        // TODO: check it
         this.getSavedStickers = function() {
             var savedStickers = [];
-            var savedLibrary = this.getSavedLibrary();
+            var savedPhotoAreaStickers = this.localStorageService.get('photoAreaStickers');
 
-            if (savedLibrary && savedLibrary.stickers) {
-                savedStickers = savedLibrary.stickers;
+            if (savedPhotoAreaStickers && savedPhotoAreaStickers.stickers) {
+                savedStickers = savedPhotoAreaStickers.stickers;
             }
 
             return savedStickers;
+        };
+
+        this.restorePhoto = function() {
+            return this.localStorageService.get('photoArea');
+        };
+
+        this.deletePhoto = function() {
+            this.localStorageService.remove('photoArea');
         };
 
         this.deleteSticker = function(sticker) {
@@ -65,15 +61,13 @@
 
             data.stickers = savedStickers;
 
-            localStorage.setItem('photoAreaStickers', JSON.stringify(data));
-
-            //$rootScope.$emit('localstorageAction', 'Some data');
+            this.localStorageService.set('photoAreaStickers', data);
 
             return sticker;
         };
 
         this.deleteStickers = function() {
-            localStorage.removeItem('photoAreaStickers');
+            this.localStorageService.remove('photoAreaStickers');
         };
     }
 

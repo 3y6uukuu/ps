@@ -89,8 +89,6 @@
         };
 
         this.deletePhotoArea = function(data) {
-            data.file = null;
-
             this.deletePhoto(data);
             this.deleteStickers(data);
         };

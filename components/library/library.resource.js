@@ -1,6 +1,8 @@
 ;(function() {
 
-    function LibraryResource() {
+    function LibraryResource(LocalStorageService) {
+        this.localStorageService = LocalStorageService;
+
         this.createNewSticker = function(sticker) {
             var savedStickers = this.getSavedStickers();
             var data = {};
@@ -9,20 +11,14 @@
 
             data.stickers = savedStickers;
 
-            localStorage.setItem('library', JSON.stringify(data));
+            this.localStorageService.set('library', data);
 
             return sticker;
         };
 
-        this.getSavedLibrary = function() {
-            var savedLibrary = localStorage.getItem('library');
-
-            return JSON.parse(savedLibrary);
-        };
-
         this.getSavedStickers = function() {
             var savedStickers = [];
-            var savedLibrary = this.getSavedLibrary();
+            var savedLibrary = this.localStorageService.get('library');
 
             if (savedLibrary && savedLibrary.stickers) {
                 savedStickers = savedLibrary.stickers;
@@ -45,7 +41,7 @@
 
             data.stickers = savedStickers;
 
-            localStorage.setItem('library', JSON.stringify(data));
+            this.localStorageService.set('library', data);
 
             return sticker;
         };

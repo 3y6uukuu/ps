@@ -1,11 +1,9 @@
 ;(function() {
 
-    function PhotoAreaController(PhotoAreaService, PhotoAreaResource) {
+    function PhotoAreaController(PhotoAreaService) {
         this.service = PhotoAreaService;
-        this.resource = PhotoAreaResource;
 
         this.data = {
-            file: this.file,
             photo: this.photo,
             stickers: []
         };
